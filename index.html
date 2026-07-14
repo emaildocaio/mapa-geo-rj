@@ -173,7 +173,7 @@ tbody tr:hover td{background:var(--cc-cream-2);}
 
   <div class="cc-card">
     <div class="h"><h2>Mapa da dobradinha — por bairro (capital)</h2>
-      <p><b style="color:var(--cat-consol)">Marrom</b>: os dois já fortes · <b style="color:var(--cat-renato)">Dourado</b>: reduto do Renato · <b style="color:var(--cat-heloisa)">Telha</b>: reduto da Heloísa. Passe o mouse ou toque num bairro.</p>
+      <p><b style="color:var(--cat-consol)">Marrom</b>: os dois já fortes · <b style="color:var(--cat-renato)">Dourado</b>: reduto do Renato · <b style="color:var(--cat-heloisa)">Telha</b>: reduto da Heloísa. <span style="color:var(--cc-subtle)">Cor pela participação na base de cada um (share), não pelo voto absoluto.</span> Passe o mouse ou toque num bairro.</p>
     </div>
     <div class="body">
       <div class="cc-maprel">
@@ -195,7 +195,8 @@ tbody tr:hover td{background:var(--cc-cream-2);}
 
   <div class="cc-card" id="muni-2022">
     <div class="h"><h2>Dobrada por região — municípios do estado (2022)</h2>
-      <p>Em 2022 os dois disputaram no estado inteiro. Fora da capital o território é majoritariamente da Heloísa (interior: 18.505 votos dela × 5.730 do Renato) — base para dobradas de expansão pelo interior. Mesmas cores do mapa da capital.</p></div>
+      <p>Em 2022 os dois disputaram no estado inteiro. Fora da capital o território é majoritariamente da Heloísa (interior: 18.505 votos dela × 5.730 do Renato) — base para dobradas de expansão pelo interior. Mesmas cores do mapa da capital.</p>
+      <p style="margin-top:6px;color:var(--cc-gold-ink)"><b>Como a cor é definida:</b> pela <b>participação de cada município na base do próprio candidato</b> (share), não pelo voto absoluto. Por isso um lugar pode ser "reduto" de quem tem menos votos ali, mas onde ele se concentra mais (ex.: Magé pesa 0,71% da base do Renato e só 0,42% da da Heloísa). Passe o mouse para ver votos e % de cada um.</p></div>
     <div class="body">
       <div class="cc-mapstate cc-maprel">
         <svg viewBox="0 0 1000 715" role="img" aria-label="Mapa dos municípios do RJ por categoria de dobradinha (2022)">
@@ -258,6 +259,7 @@ const CAP={CONSOLIDAR:{t:"Consolidar",c:"var(--cat-consol)",s:"Território comum
   HELOISA:{t:"Heloísa ancora",c:"var(--cat-heloisa)",s:"Reduto dela onde o Renato é fraco — ele cresce aqui."}};
 const IC={vote:`<path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5z"/><path d="M22 19H2"/>`,landmark:`<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/>`,link:`<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,layers:`<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>`};
 const fmt=n=>n.toLocaleString('pt-BR');
+const pf=x=>(+x).toFixed(2).replace('.',',');
 const encJS=s=>s.normalize('NFD').replace(/[^\w]/g,'_');
 let ano="2022";
 const paths=[...document.querySelectorAll('#paths path')];
@@ -300,7 +302,7 @@ function hot(nome,on){const el=document.getElementById('b-'+encJS(nome));if(el)e
 for(const el of paths){
   el.addEventListener('mousemove',e=>{const d=DATA['c'+ano][el.dataset.nome];const r=mapa.getBoundingClientRect();
     tip.style.left=(e.clientX-r.left)+'px';tip.style.top=(e.clientY-r.top)+'px';tip.style.opacity='1';
-    tip.innerHTML='<b>'+el.dataset.nome+'</b>'+(d?('Renato '+d.vR+' ('+d.sR+'%) · Heloísa '+d.vH+' ('+d.sH+'%)'):'sem voto');});
+    tip.innerHTML='<b>'+el.dataset.nome+'</b>'+(d?('Renato '+d.vR+' ('+pf(d.sR)+'%) · Heloísa '+d.vH+' ('+pf(d.sH)+'%)'):'sem voto');});
   el.addEventListener('mouseleave',()=>{tip.style.opacity='0';});
 }
 // tooltip do mapa do estado (municípios)
@@ -311,7 +313,7 @@ const mrel=document.querySelector('#muni-2022 .cc-mapstate');
 for(const el of mpaths){
   el.addEventListener('mousemove',e=>{const m=MUNI[el.dataset.ch];const r=mrel.getBoundingClientRect();
     tipM.style.left=(e.clientX-r.left)+'px';tipM.style.top=(e.clientY-r.top)+'px';tipM.style.opacity='1';
-    tipM.innerHTML='<b>'+(m?m.nome:el.dataset.ch)+'</b>'+(m?('Renato '+m.vR+' · Heloísa '+m.vH):'sem voto');});
+    tipM.innerHTML='<b>'+(m?m.nome:el.dataset.ch)+'</b>'+(m?('Renato '+m.vR+' ('+pf(m.sR)+'%) · Heloísa '+m.vH+' ('+pf(m.sH)+'%)'):'sem voto');});
   el.addEventListener('mouseleave',()=>{tipM.style.opacity='0';});
 }
 document.querySelectorAll('.cc-toggle button').forEach(b=>{b.addEventListener('click',()=>{
