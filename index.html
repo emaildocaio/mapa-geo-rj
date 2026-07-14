@@ -189,27 +189,17 @@ tbody tr:hover td{background:var(--cc-cream-2);}
 
   
 <style>
-.cc-assinatura{background:var(--cc-ink);color:var(--cc-cream);
-  border-top:3px solid var(--cc-gold);border-radius:12px;margin-top:28px;
-  display:flex;align-items:center;gap:14px;padding:15px 20px;font-family:var(--cc-font);}
-.cc-assinatura img{height:40px;width:auto;display:block;flex:0 0 auto;}
-.cc-assinatura .cc-sig-id{display:flex;flex-direction:column;line-height:1.2;}
-.cc-assinatura .cc-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--cc-gold);font-weight:700;}
-.cc-assinatura .cc-nome{font-size:15px;font-weight:600;color:var(--cc-cream);margin-top:3px;}
-.cc-assinatura .cc-meta{margin-left:auto;text-align:right;font-size:11px;
-  color:var(--cc-subtle);line-height:1.5;max-width:42%;}
-@media(max-width:560px){.cc-assinatura{flex-wrap:wrap;gap:10px}
-  .cc-assinatura .cc-meta{margin-left:0;text-align:left;max-width:100%}}
+.cc-assinatura{margin-top:26px;padding-top:12px;border-top:1px solid var(--cc-line);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-family:var(--cc-font);font-size:11.5px;color:var(--cc-subtle);}
+.cc-assinatura .cc-by b{font-weight:600;color:var(--cc-muted);}
+.cc-assinatura a{color:var(--cc-subtle);text-decoration:none;}
+.cc-assinatura a:hover{color:var(--cc-brick);text-decoration:underline;}
 @media print{.cc-assinatura{break-inside:avoid}}
 </style>
 <footer class="cc-assinatura">
-  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABgCAYAAACkLtSSAAAAAXNSR0IArs4c6QAAAHhlWElmTU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAIdpAAQAAAABAAAATgAAAAAAAACrAAAAAQAAAKsAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAESgAwAEAAAAAQAAAGAAAAAAeEpEVAAAAAlwSFlzAAAaTAAAGkwBHCw5nAAAC05JREFUeAHtmHuMXFUZwL9z7p07s89uu/TFdilFNm3ZBSrIqyBIUEQlPAQhJhAwWBLBahoIxAQRJRITEhQJ4B9SYhQMoDxCyzOhDVqhpQWiPAotbPfJdtltd2d3Z3dn7j3H37kzs92gEgLR1OScdPbee173+37f69yK+OYJeAKegCfgCXgCnoAn4Al4Ap6AJ+AJeAKegCfgCXgCnoAn4Al4Ap6AJ+AJeAKegCfgCXgCnoAn4Al4Ap6AJ+AJeAKewKchoD7NooNljbWbQpG2OSKqlt+kUocOOdms7T9ERK+WxEaprFbtl3DsFaXa8tb2LhHJnChJaVokMLFNimGY3abU/DE3lw0Pnmat1SJ7a5RaNGFtZ07i3EmikoVi1AIJ1CKUnCO6dKdSrbtTqZO29RJkzwZBjSTxq6w/SyllJEnOlqDhAQmKTGNLiUVM/ZvWfnCumPg80U13SjCabhFKnUgyfiEPj7uO/xkQhMUb9zXI1OhcCWoWIEVRMrV7JC6sNUot02IXi+lfKDo318Y910tsxyXMPYvlMaQT1fLDEcxQgZsbbd55gf064810uvETRD7A+tLNj0UlXjEFCRnmt1CCxnaJR3+QKHk+kPEuwCzFlRyvAbGmTIeJnxmItdszIjVZkaMmsA5648bx8rMkrFkupfwWFS3dQWdgkr4HdBCtlky2SYKwAXfeKvHkjyVsvtXZUAQPFmdR5+VTKGr+hGUn4DaCsvWinHegQCJdTOCV5mjRmWYxxQKKRXhKnSSTxzMCkCDVlPtBooLw0M76XxDAh+GSp22pb42E4XN4VSJJ4SIJl77EeNpmgKQuKrUtCIJyChmjvFLzHG3e19MiJsStkibcF8GyhyTx5PNBFOK6md9KPJWTpPscpr7Pe+eKGntIpGGOqPGf0LdDZE9GS+Y05raITtyOTvudbDwodmSrmKQXYY/BPm2kAsOMJ4JwahPPHVIqKclknhNdO8fG41tVX2k9a51lV4tqxND7HtdKPi+SXSl2infIY+m4+6PQI5FjuOJFOI2128pjBvehWTrDYMwZstw/20OS6AIJgvUkGyBpTaxO2Lj3CQla1kjSeyIud1dqQQ0vqWFqHy+zBSxztKhpw9a58qYTSpTlhRNso8ovlsOnxfZdLmbydtH1x0sy9rwEI1ersN25xMn5/NvNDXVzdoiugXn+Uaz4ZEXAPbbUe5MEtUfCsKRCfYNatmwqHTPqNNExktoHywaUlfSvdmNJkiAfWK1dhHxPOXpiRl+VsPaedC2E0mv61xn/QJvxELoI0BCJ3CxbRKlGIFwuyQfPsvuHIpNsWjRiC5tEFXqY+2c6CBensyVWXUB+pLnQplUssMmUegeUdgnBFpVKYaTjDbX1PxVdt1TMRJ7keVPa6WbZniPxzOtSmUzxfhW2vujGrO0iz8gq5aCLWsOvQyzyKXWUtaPzAI48qR6jEhd7UKuDiQ0yVqjqW4aKkuzGwgNtNh0G000GxdgzcONd6bNzx5j93ZjF8gEC6slrVLhoAx3OXcotiv4VSHWscsV10vTIXu5FabPF/uNEZa4Si0WNuU2plneqYzj2z/AawrQwzPjvrB3o4EdZCFeqIKD6GJCrM5GjUZxTBlGjxOPH4RE8pKoNI/aPMGRCyLVJjbqekryCkL+GRMprXFXLrLGFvtbqO2cDqfTh5jYm6zpXQm5jhokzR9KNk/HsCxKrLeXJ6a6Vdf/moimBs5tSaE2zTnt3sYFVyc8RMEc45Uma09YO3cRZYZUt9XxJh9lLgOEmklQzGCB6jSR7HkUFiHMUhttEBfocVfWL7IWl6922XyZokN1FsCKBJ1usSV5JA0DL+ay5VPS8y0ShSpBDwebr0Yo15VZ1ocpjKud8CTKbRUcLxI5NiymRpHJHVCawgZqEU2f6nGDpis15rrgemdtV2HKrxSKHYa0pyZecGyMxF63bKK0XkpumVZA9J1VapBFv+KUI5ywzaPDQLgnrAvITOyk80SUvV4EKEbY5lUlFctTGymFsyCZ9f6RSHQNUKpP0ii5sZF23yGGjSnpuQbxLSknp7gzKiRruQC/2sSHAAgn0m2VxZyfVao8GnXIwTD+hcrPKLttpY9wscCyojcXi1yTa/TYW0VLsr2iON8WyloMP+iZPlZMpYWplHUqs4zywUep0M7noDEoqujUcKyb/C5Rem0aRcnYBlJnGtUfH8dDOkULy9Jxg/yNKBcAxe9lzkFAdwAAbkOJlku+tEvUT1uWmgparqveV67nVZzxuezy1fyqqWfZqpe9bB8Z62nAVl9zT9hEPwdOsHREVXyET4y+rhiMHqxOddvwDsLpP7NGhJD2Pcf9GOq51yOmZ5Ieb6qG9wArTohPYBsoh66ZqLXEOvVEg7EOxIdx+s7w7tlna5BrKqqPXJ4lTfHJYgtb+piaSQKnvDhUtfvmADDN37rCVtsnJzsNzuexgsVhaFkVhZGJzJWfA1wjFPhRNwjB5zZjMbTpQ9bbUTwhwrAhtF2G/1JVcDHgBxnd6/sptOBsINDLI5fLC8AuqoX08fWP5D4FBEQoCN+eEVHFV/DtzXyLZlYhLwmV8DDcdQeGtxNE95IRGYrmf0rhXjH5FRYb9yCFaRpVa4E6b1XZv9Wb2NZ7uvTjQ6vt2Ys+lkstexrveQ5mzIV4r+/PXqvkrxsgz5xDad0lc2hhpvC82D2mlV+BSxUCFp7NmuYn1izrQJ/Hev7D+ahSsJ1lv5mBB+U9a8bytvNdVjbTNApJAvUhuULtlyMXHrBbIWyj8axNPj2j3oaSj/XgHiWoxLjuwCkOQhPP8Bqdkz5JADq+NOTHVEHLvq5qWTs4Sd4i03MDcuUCyhOA9hMUTFJslHBmmw2zrH+x09/kAv04K6pucQskF+hYUesdE4XUcir5NpX4Q2VahVE7m1l9kxzufYc6xosII6LsJq5XsdwJhvUurAMOYr7pCg7xNVKAIbQgNGbQq6tC65M5Ny52BrLFtBHx3VdsZICo87HFr33yqclhKx619OJDSSatIXDvo+GF1UfXq8ohSi98ql8KmeRzf+83SvivpvNBY2aQzmflJsfdm5q/gRL2cb7Df40F3Uv5P5sSL1+kVQWAjTskbJFHfoLC1c+bjoCfshTpKWjmtd6Io7q85rcpXjDXbUbJVspl2KRTWS21o0Ho73z4Y1P5DbFCSLEASs4F+V+VYa1plmmSbzU1QQw+lUg1JLporpSRDqcJr9UBVpxkg1n7YwIYL7eSeBBe1TF6EEBwF1bUofCNfoGk+sbbvVIz8XeY+zKFtLda+D09Yx7w6Ps6ewT3PxbJv8bG2gFg+RWu+VEWIVX0FCXGBsbYDw+1CuW0oegp5ycGe4kruCh9Nv2mCySclqQ0Ix34ZKbwuDXULJRuNcYresvOd/Lr29gOHOtbeXlHmo7lmb6XfXfbNuifzp61rVt/M7Uxo2FI3n8y53/DfAwMU03cRcAkW6qb+n06Jup9SOoIS5Ap7MZZ8DpdstjrzHWVKd6euSj1kLMf9CnJKgbVv4Anso8+kf8QYu0UHmfkcwbdhxSFOj5S66SagD7vP/RmJPuYGjww49aZng4+Z9pmGZjxE4sy75JA8u2EtBUW7C8UpEVhO7F+JtzyeMErNPgQXPI3+nQj3NzwjjyUfIeOOcx5ylid7G9YnH4osHRJ55HalLvlPSrj3feL234bhBDngIXbvEWTrZ2JJvhfG5j3iqk6iTKfE4XHUotepDDNVx+WMT2rVT6ztwTbR2l2Npcmusw42ubw8noAn4Al4Ap6AJ+AJeAKegCfgCXgCnoAn4Al4Ap6AJ+AJeAKegCfgCXgCnoAn4Al4Ap6AJ+AJeAKegCfgCXgCnoAn4An8fxD4J/Yot9gCwgNtAAAAAElFTkSuQmCC" alt="Renato Pellizzari" />
-  <div class="cc-sig-id">
-    <span class="cc-eyebrow">Central de Campanha</span>
-    <span class="cc-nome">Renato Pellizzari · Deputado Estadual — RJ</span>
-  </div>
-  <div class="cc-meta">Documento de uso interno · Gerado em 14/07/2026</div>
+  <span class="cc-by">By <b>@caiofarias</b></span>
+  <span class="cc-contato"><a href="mailto:emaildocaio@gmail.com">emaildocaio@gmail.com</a></span>
 </footer>
 </div>
 
