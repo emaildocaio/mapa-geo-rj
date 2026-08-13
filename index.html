@@ -141,10 +141,13 @@ tbody tr:hover td{background:var(--cc-cream-2);}
 
 /* matriz por região */
 .cc-matriz{overflow-x:auto;}
-.cc-matriz table{min-width:640px;}
-.cc-matriz td.cel{position:relative;font-weight:600;color:var(--cc-ink-2);}
+.cc-matriz table{min-width:820px;}
+.cc-matriz td.cel{position:relative;font-weight:600;color:var(--cc-ink-2);padding:7px 8px;}
 .cc-matriz td.cel .bar{position:absolute;inset:2px 3px;border-radius:4px;background:var(--bg);z-index:0;}
-.cc-matriz td.cel span{position:relative;z-index:1;}
+.cc-matriz td.cel span{position:relative;z-index:1;display:block;}
+.cc-matriz td.cel i{position:relative;z-index:1;display:block;font-style:normal;font-size:10.5px;
+  font-weight:600;color:var(--cc-muted);margin-top:1px;letter-spacing:-.01em;}
+.cc-matriz td.cel.top i{color:var(--cc-ink-2);}
 .cc-matriz td.cel.top{outline:2px solid var(--cc-ink);outline-offset:-2px;border-radius:5px;}
 .cc-matriz thead th .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:baseline;}
 .cc-matriz thead th.cand{color:var(--cc-ink-2);font-size:10.5px;}
@@ -292,11 +295,13 @@ tbody tr:hover td{background:var(--cc-cream-2);}
     </div>
     <div class="body">
       <div class="cc-comofunciona">
-        <b>Como ler:</b> cada número é a fatia da votação <i>daquele</i> candidato que veio da região —
+        <b>Como ler:</b> o número grande é a fatia da votação <i>daquele</i> candidato que veio da região —
         se o Renato aparece com 12% na Tijuca, significa que 12 de cada 100 votos dele saíram da Tijuca.
-        Não é comparação de tamanho: o Freixo teve 2,3 milhões de votos e o Renato 19 mil, mas as fatias mostram
-        <b>onde cada um concentra a base</b>, que é o que importa para montar dobrada.
-        A barra colorida é só a leitura visual da fatia (mais escuro = mais concentrado) e a
+        A fatia mostra <b>onde cada um concentra a base</b>, que é o que importa para montar dobrada.
+        <br><b>Embaixo, o voto absoluto</b> — porque as duas coisas contam: 1% da votação do Freixo é muito mais gente
+        que 1% da do Renato. A fatia diz <i>onde o parceiro está plantado</i>; o número de votos diz
+        <i>quanta gente tem ali para alcançar</i>.
+        A barra colorida é a leitura visual da fatia (mais escuro = mais concentrado) e a
         <b>célula com contorno</b> marca o parceiro mais concentrado naquela região.
       </div>
 
@@ -593,13 +598,15 @@ function matriz(alvo,agg,titulo){
     const cels=COMPS.map(s=>{
       const v=share(s,r);const cor=s===A?'#d99a2b':FICHAS[s].cor;
       const alpha=maxS?Math.min(.42,v/maxS*.42):0;
-      return `<td class="cel${s===top?' top':''}" style="--bg:${hexA(cor,alpha)}"><div class="bar"></div><span>${p1(v)}%</span></td>`;
+      // fatia em cima, voto absoluto embaixo: 1% do Freixo é MUITA gente,
+      // 1% do Renato são 137 votos — só o percentual esconde isso.
+      return `<td class="cel${s===top?' top':''}" style="--bg:${hexA(cor,alpha)}"><div class="bar"></div><span>${p1(v)}%</span><i>${fmt(dados[s].out[r]||0)} votos</i></td>`;
     }).join('');
-    return `<tr><td>${escJS(r)}</td><td style="color:var(--cc-subtle);font-size:11.5px">${fmt(dados[A].out[r]||0)}</td>${cels}</tr>`;
+    return `<tr><td>${escJS(r)}</td>${cels}</tr>`;
   }).join('');
-  const foot=`<tr><td>Total</td><td style="color:var(--cc-subtle);font-size:11.5px">${fmt(dados[A].tot)}</td>`+
+  const foot=`<tr><td>Total</td>`+
     COMPS.map(s=>`<td>${fmt(dados[s].tot)}</td>`).join('')+'</tr>';
-  el(alvo).innerHTML=`<table><thead><tr><th>${titulo}</th><th>Votos Renato</th>${head}</tr></thead>
+  el(alvo).innerHTML=`<table><thead><tr><th>${titulo}</th>${head}</tr></thead>
     <tbody>${body}</tbody><tfoot>${foot}</tfoot></table>`;
   return {dados,ordem,share};
 }
@@ -607,7 +614,8 @@ function hexA(hex,a){const h=hex.replace('#','');const n=parseInt(h.length===3?h
   return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a.toFixed(3)})`;}
 
 function melhores(alvo,M){
-  const {ordem,share}=M;const parc=COMPS.filter(s=>s!==A);
+  const {ordem,share,dados}=M;const parc=COMPS.filter(s=>s!==A);
+  const votos=(s,r)=>dados[s].out[r]||0;
   el(alvo).innerHTML=ordem.map(r=>{
     const sr=share(A,r);
     const rank=parc.map(s=>({s,sp:share(s,r),idx:Math.sqrt(sr*share(s,r))})).sort((a,b)=>b.idx-a.idx);
@@ -619,11 +627,12 @@ function melhores(alvo,M){
     const tipo=razao>=1.25?'expand':(razao<=0.8?'puxa':'consol');
     const label={expand:'Expansão',consol:'Consolidação',puxa:'Renato ancora'}[tipo];
     const nomeC=escJS(FICHAS[win.s].curto);
+    const vr=fmt(votos(A,r)), vp=fmt(votos(win.s,r));
     const why=tipo==='expand'
-      ? `A região responde por ${p1(win.sp)}% da votação de ${nomeC} e só ${p1(sr)}% da do Renato — quem já está plantado ali é ${nomeC}, e é quem apresenta o Renato.`
+      ? `${p1(win.sp)}% da votação de ${nomeC} sai daqui (${vp} votos) contra ${p1(sr)}% da do Renato (${vr}) — quem já está plantado ali é ${nomeC}, e é quem apresenta o Renato.`
       : tipo==='puxa'
-      ? `A região responde por ${p1(sr)}% da votação do Renato e ${p1(win.sp)}% da de ${nomeC} — aqui quem leva o parceiro é o Renato.`
-      : `Peso parecido: ${p1(sr)}% da votação do Renato e ${p1(win.sp)}% da de ${nomeC} — território de soma, não de conquista.`;
+      ? `${p1(sr)}% da votação do Renato sai daqui (${vr} votos) contra ${p1(win.sp)}% da de ${nomeC} (${vp}) — aqui quem leva o parceiro é o Renato.`
+      : `Peso parecido: ${p1(sr)}% da votação do Renato (${vr} votos) e ${p1(win.sp)}% da de ${nomeC} (${vp}) — território de soma, não de conquista.`;
     const vice=rank[1]?` · 2º: ${escJS(FICHAS[rank[1].s].curto)}`:'';
     return `<div class="cc-bcard" style="--pc:${FICHAS[win.s].cor}">
       <div class="reg">${escJS(r)}</div>
